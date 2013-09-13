@@ -1,40 +1,29 @@
-define(['lib/helpers'], function(helpers){
-  Projectile = function(position, direction, color){
+define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpers){
+  Projectile = function(base){
+    PhysicalObject.call(this, base);
     //init
-    this.position = {x: position.x, y: position.y}
-    this.active = true;
-    this.direction = direction;
-    this.speed = 500;
-    this.color = color;
-    this.width = 6;
-    this.height = 6;
-    this.draw_position = helpers.draw_position(this.position, this.width, this.height)
-    
+    this.direction = base.direction || 'right';
+    this.speed = base.speed || 500;
+    this.width = base.width || 6;
+    this.height = base.height || 6;
+    this.origin = base.origin || {}
   }
-  Projectile.prototype = {
-    update: function(dt) {
-      switch(this.direction) {
-        case 'right':
-          this.position.x += (this.speed * dt);
-          break;
-        case 'left':
-         this.position.x -= (this.speed * dt);
-          break;
-      }
-      
-      this.draw_position = helpers.draw_position(this.position, this.width, this.height)
-
-      if (this.position.x < 0 || this.position.x > 640) this.explode();
-    },
-    draw: function(context) {
-      context.fillStyle=this.color;
-      context.fillRect(this.draw_position.x, this.draw_position.y, this.width, this.height);
-      
-    },
-    explode: function(reason) {
-      this.active = false;
+  Projectile.prototype = Object.create(PhysicalObject.prototype);
+  Projectile.prototype.update = function(dt) {
+    switch(this.direction) {
+      case 'right':
+        this.x += (this.speed * dt);
+        break;
+      case 'left':
+       this.x -= (this.speed * dt);
+        break;
     }
-  };
+    
+    this.draw_x = helpers.draw_x(this.x, this.y, this.width, this.height)
+    this.draw_y = helpers.draw_y(this.x, this.y, this.width, this.height)
+
+    if (this.x < 0 || this.x > 640) this.explode();
+  }
 
   return Projectile
 })
