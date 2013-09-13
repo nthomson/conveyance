@@ -1,6 +1,6 @@
 define(function() {
   return {
-    player_name: 'Robins',
+    player: {ammo: 100},
     canvas: document.getElementById('conveyance'),
     game_width: 640,
     game_height: 480,
