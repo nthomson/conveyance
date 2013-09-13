@@ -6,6 +6,7 @@ define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpe
     this.speed = base.speed || 500;
     this.width = base.width || 6;
     this.height = base.height || 6;
+    this.origin = base.origin || {}
   }
   Projectile.prototype = Object.create(PhysicalObject.prototype);
   Projectile.prototype.update = function(dt) {
