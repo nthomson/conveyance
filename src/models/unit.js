@@ -5,8 +5,10 @@ define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpe
   }
   Unit.prototype = Object.create(PhysicalObject.prototype);
   Unit.prototype.fire = function() {
-    var event = new CustomEvent('enemy:fire', {
+    this.ammo--;
+    var event = new CustomEvent('unit:fire', {
       'detail': {
+        origin: this,
         x: this.x + this.width / 2,
         y: this.y - this.height / 2,
         direction: this.direction,
