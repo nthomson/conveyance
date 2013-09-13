@@ -18,7 +18,6 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
       if (o instanceof Enemy) {
         this.enemy_projectiles.push(new Projectile(p));
       } else if (o instanceof Player) {
-        console.log(o);
         this.player_projectiles.push(new Projectile(p));
       }
     }.bind(this), false);
@@ -31,10 +30,6 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
         this.redraw(config.canvas.getContext('2d'));
         // start the mainloop
         requestAnimationFrame( this.run.bind(this), config.canvas );
-      }
-      else {
-        //Start over?
-        alert('lose!');
       }
     },
     update: function() {
