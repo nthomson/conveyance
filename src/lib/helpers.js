@@ -10,6 +10,9 @@ define(function(){
         case 32:
           this.player.jump();
           break;
+        case 82:
+          this.start_level();
+          break;
       }
     },
     draw_x: function(x, y, width, height) {
