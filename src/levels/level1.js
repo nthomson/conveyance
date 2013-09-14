@@ -42,13 +42,15 @@ define(function(){
         x: 400, y: 400,
         width: 10,
         height: 20,
-        fire_rate: 4
+        fire_rate: 4,
+        direction: 'left'
       },
       {
         x: 1917, y: 360,
         width: 10,
         height: 20,
-        fire_rate: 1
+        fire_rate: 1,
+        direction: 'up'
       }
     ]
   }
