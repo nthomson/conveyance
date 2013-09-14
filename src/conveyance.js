@@ -5,7 +5,9 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
     this.player = new Player(config.player);
     
     this.entities = level1.enemies.map(function(ene){ene.level_speed = config.base_speed; return new Enemy(ene);}).concat(level1.obstacles.map(function(obs){obs.level_speed = config.base_speed; return new Obstacle(obs);}))
-    
+
+    //Don't start the game paused
+    this.pause = false;
 
     window.onkeydown = helpers.key_press.bind(this);
     
@@ -33,14 +35,16 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
       if(!dt){dt = 0;}
       this.lastFrame = thisFrame;
       
-      this.handle_collisions();
-      
-      //Update all of the game's objects
-      this.player.update(dt);
-      this.entities.forEach(helpers.update_with_dt.bind(dt));
+      if (!this.pause) {
+        this.handle_collisions();
 
-      //Filter objects that are no longer active
-      this.entities = this.entities.filter(helpers.filter_active);
+        //Update all of the game's objects
+        this.player.update(dt);
+        this.entities.forEach(helpers.update_with_dt.bind(dt));
+
+        //Filter objects that are no longer active
+        this.entities = this.entities.filter(helpers.filter_active);
+      }
     },
     handle_collisions: function() {
       
