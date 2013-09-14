@@ -1,9 +1,9 @@
-define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpers){
+define(['models/entity', 'models/projectile', 'lib/helpers'], function(Entity, Projectile, helpers){
   Unit = function(base){
-    PhysicalObject.call(this, base);
+    Entity.call(this, base);
     this.ammo = base.ammo || -1;
   }
-  Unit.prototype = Object.create(PhysicalObject.prototype);
+  Unit.prototype = Object.create(Entity.prototype);
   Unit.prototype.fire = function() {
     this.ammo--;
     var event = new CustomEvent('unit:fire', {
@@ -12,10 +12,17 @@ define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpe
         x: this.x + this.width / 2,
         y: this.y - this.height / 2,
         direction: this.direction,
-        color: this.color
+        color: this.color,
+        level_speed: this.level_speed
       }
     });
     dispatchEvent(event);
+  }
+  Unit.prototype.collide = function(collided_with){
+    if(collided_with instanceof Projectile) {
+      this.explode();
+      console.log('Collided!')
+    }
   }
   return Unit
 })

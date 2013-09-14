@@ -1,9 +1,9 @@
-define(['models/physical_object', 'lib/helpers'], function(PhysicalObject, helpers){
+define(['models/entity', 'lib/helpers'], function(Entity, helpers){
   Item = function(base){    
-    PhysicalObject.call(this, base);
+    Entity.call(this, base);
   }
   
-  Item.prototype = Object.create(PhysicalObject.prototype);
+  Item.prototype = Object.create(Entity.prototype);
   
   return Item
 })
