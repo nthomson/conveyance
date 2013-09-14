@@ -30,20 +30,15 @@ define(function(){
              a.draw_y < b.draw_y + b.height &&
              a.draw_y + a.height > b.draw_y;
     },
+    check_collide: function(first, second) {
+      if(this.collides(first, second)){
+        first.collide(second);
+        second.collide(first);
+      }
+    },
     draw_with_context: function(object){
       object.draw(this);
     },
-    explode_first_on_collide: function(first, second) {
-      if(this.collides(first, second)){
-        first.explode();
-      }
-    },
-    explode_both_on_collide: function(first, second) {
-      if(this.collides(first, second)){
-        first.explode();
-        second.explode();
-      }
-    }
   };
 })
 

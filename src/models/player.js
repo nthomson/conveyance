@@ -1,4 +1,4 @@
-define(['models/unit', 'models/projectile', 'lib/helpers'], function(Unit, Projectile, helpers){
+define(['models/unit', 'models/projectile', 'models/enemy', 'models/obstacle', 'lib/helpers'], function(Unit, Projectile, Enemy, Obstacle, helpers){
   Player = function(base){
     Unit.call(this, base);
 
@@ -45,6 +45,17 @@ define(['models/unit', 'models/projectile', 'lib/helpers'], function(Unit, Proje
     if(this.grounded) {
       this.grounded = false;
       this.jump_sin_wave_pos = 0;
+    }
+  }
+  
+  Player.prototype.collide = function(collided_with) {
+    Unit.prototype.collide.call(this, collided_with);
+    
+    if(collided_with instanceof Enemy) {
+      this.explode();
+    }
+    if(collided_with instanceof Obstacle) {
+      this.explode();
     }
   }
 
