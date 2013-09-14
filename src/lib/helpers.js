@@ -4,7 +4,9 @@ define(function(){
       switch(e.which) {
         //f
         case 70:
-          this.player.fire();
+          if (!this.pause) {
+            this.player.fire();
+          }
           break;
         //space
         case 32:
