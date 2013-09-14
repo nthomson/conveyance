@@ -1,13 +1,9 @@
 define(['models/player', 'models/obstacle', 'models/enemy', 'levels/level1', 'lib/helpers', 'config'],
 function(Player, Obstacle, Enemy, level1, helpers, config) {
-  var Conveyance = function() {
-    //init
-    this.player = new Player(config.player);
-    
-    this.entities = level1.enemies.map(function(ene){ene.level_speed = config.base_speed; return new Enemy(ene);}).concat(level1.obstacles.map(function(obs){obs.level_speed = config.base_speed; return new Obstacle(obs);}))
-
-    //Don't start the game paused
-    this.pause = false;
+  var Conveyance = function() {    
+    //Eventually we should think about abstracting levels. That way we could do: start_level(level1)
+    //and be fairly flexible in how the game progresses.
+    this.start_level();
 
     window.onkeydown = helpers.key_press.bind(this);
     
@@ -18,7 +14,7 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
       this.entities.push(new Projectile(p));
     }.bind(this), false);
   }
-  
+ 
   Conveyance.prototype = {
     run: function() {
       if(this.player.active){
@@ -77,6 +73,13 @@ function(Player, Obstacle, Enemy, level1, helpers, config) {
       this.player.draw(context);
       this.entities.forEach(helpers.draw_with_context.bind(context));
       
+    },
+    start_level: function() {
+      //Don't start the game paused
+      this.pause = false;
+      
+      this.player = new Player(config.player);
+      this.entities = level1.enemies.map(function(ene){ene.level_speed = config.base_speed; return new Enemy(ene);}).concat(level1.obstacles.map(function(obs){obs.level_speed = config.base_speed; return new Obstacle(obs);}))
     }
   }
   

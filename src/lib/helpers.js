@@ -4,9 +4,8 @@ define(function(){
       switch(e.which) {
         //f
         case 70:
-          if (!this.pause) {
+          if (!this.pause)
             this.player.fire();
-          }
           break;
         //space
         case 32:
@@ -14,6 +13,9 @@ define(function(){
           break;
         case 80:
           this.pause = !this.pause;
+          break;
+        case 82:
+          this.start_level();
           break;
       }
     },
